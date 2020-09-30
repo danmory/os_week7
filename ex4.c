@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void* my_realloc(void* ptr, size_t newSize, size_t oldSize){
+void* myRealloc(void* ptr, size_t newSize, size_t oldSize){
 	
     // If ptr is NULL, the call is equivalent to malloc(size)
 	if(ptr == NULL){
@@ -15,31 +15,32 @@ void* my_realloc(void* ptr, size_t newSize, size_t oldSize){
 		return NULL;
 	}
 
-	void* NewPtr = malloc(newSize);
+	void* newPtr = malloc(newSize);
 
-	if(NewPtr == NULL){
+	if(newPtr == NULL){
 		return NULL;
     }
 	
 	size_t minSize = oldSize < newSize? oldSize : newSize;
-	memcpy(NewPtr, ptr, minSize);
+	memcpy(newPtr, ptr, minSize);
 
 	free(ptr);
 	
-	return NewPtr;
+	return newPtr;
 }
 
 
 int main(){
     /* TESTING */
     int* arr = (int*)malloc(5 * sizeof(int));
+
     for (int i = 0; i < 5; i++){
         *(arr + i) = i;
         printf("%d ", *(arr + i));
     }
     printf("\n");
 
-    my_realloc(arr, 7*sizeof(int), 5*sizeof(int));
+    arr = myRealloc(arr, 7*sizeof(int), 5*sizeof(int));
     
     for (int i = 5; i < 7; i++){
         *(arr + i) = i;
@@ -48,5 +49,8 @@ int main(){
     for (int i = 0; i < 7; i++){
         printf("%d ", *(arr + i));
     }
+
+    free(arr);
+
 	return 0;
 }
